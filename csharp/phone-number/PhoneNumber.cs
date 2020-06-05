@@ -5,11 +5,16 @@ public class PhoneNumber
 {
     public static string Clean(string phoneNumber)
     {
+        if (string.IsNullOrEmpty(phoneNumber))
+        {
+            throw new ArgumentException($"'{nameof(phoneNumber)}' cannot be null or empty", nameof(phoneNumber));
+        }
+
         var numbers = new List<int>();
 
         numbers = Cleaner(phoneNumber);
 
-        if (isValid(numbers))
+        if (IsValid(numbers))
             return string.Join("", numbers);
         else
             throw new ArgumentException("Invalid area code");
@@ -43,9 +48,6 @@ public class PhoneNumber
     }
 
 
-    private static bool isValid(List<int> numbers)
-    {
-        return (numbers[0] > 1 && numbers[3] > 1);
-    }
+    private static bool IsValid(List<int> numbers) => (numbers[0] > 1 && numbers[3] > 1);
 
 }
