@@ -31,33 +31,52 @@ public class KindergartenGarden
     public IEnumerable<Plant> Plants(string student)
     {
         var list = ConvertDiagram(diagram);
-        var pots = list[];
+        var pots = list[(int)(Student)Enum.Parse(typeof(Student), student)];
+        var result = new List<Plant>();
+
+        foreach (var p in pots)
+        {
+            Plant plant = new Plant();
+
+            switch (p.ToString())
+            {
+                case "V":
+                    plant = Plant.Violets;
+                    break;
+                case "R":
+                    plant = Plant.Radishes;
+                    break;
+                case "C":
+                    plant = Plant.Clover;
+                    break;
+                case "G":
+                    plant = Plant.Grass;
+                    break;
+            }
+
+            result.Add(plant);
+        }
+        return result;
     }
 
     private List<string> ConvertDiagram(string diagram)
     {
-        var lst = new List<string>();
-
         var str = diagram.Split("\n");
-
         var words = new List<string>();
 
         for (int i = 0; i < str[0].Length - 1; i = i + 2)
         {
-            string word = "";
-            word.Append(str[0][i]);
-            word.Append(str[0][i + 1]);
+            StringBuilder strBldr = new StringBuilder();
+            strBldr.Append(str[0][i]);
+            strBldr.Append(str[0][i + 1]);
 
-            word.Append(str[1][i]);
-            word.Append(str[1][i + 1]);
+            strBldr.Append(str[1][i]);
+            strBldr.Append(str[1][i + 1]);
 
-            words.Add(word);
+            words.Add(strBldr.ToString());
         }
-
         return words;
-
     }
-
-
-
 }
+
+
